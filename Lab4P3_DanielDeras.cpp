@@ -8,13 +8,7 @@ void imprimir_mensaje(char* mensaje) {
 		cout << mensaje[i];
 	}
 }
-void liberar_memoria(char* mensaje) {
-	for (int i = 0; i < strlen(mensaje); i++) {
-		delete[] mensaje;
-	}
-}
 void combinacion_casas(int* arreglo, int& tamano_casa) {
-	//int* arreglo_ganancia = new int[tamano_casa];
 	int ganancia_total;
 	int posicion = 0;
 	int acum = 0;
@@ -30,15 +24,15 @@ void combinacion_casas(int* arreglo, int& tamano_casa) {
 			acum += arreglo[i];
 		}
 	}
-	cout << ganancia_total << " " << acum << endl;
 	if (ganancia_total < acum) {
 		ganancia_total = acum;
+		posicion = 1;
 	}
-	cout << ganancia_total;
-	cout << endl;
-	/*for (int i = 0; i < tamano_casa; i+=2) {
-		cout << " [" << arreglo_ganancia[i] << "] \n";
-	}*/
+	cout << "La mejor combinacion para robar es: ";
+	for (int i = posicion; i < tamano_casa; i+=2) {
+		cout << i << " ";
+	}
+	cout << endl <<"Con una ganancia total de: " << ganancia_total << endl;
 }
 int main() {
 	srand(time(0));
@@ -89,7 +83,6 @@ int main() {
 			cout << " es: ";
 			imprimir_mensaje(mensaje);
 			cout << endl;
-			liberar_memoria(mensaje);
 			break;
 		case 2:
 			do
@@ -103,7 +96,7 @@ int main() {
 			arreglo = new int[tamano_casa];
 			for (int i = 0; i < tamano_casa; i++) {
 				int numero_random = 500 + rand() % (10000 - 500 + 1);
-				arreglo[i] = i;//numero_random;
+				arreglo[i] = numero_random;
 				cout << "Casa " << i << ": $" << arreglo[i] << endl;
 			}
 			combinacion_casas(arreglo, tamano_casa);
@@ -112,4 +105,6 @@ int main() {
 			break;
 		}
 	} while (resp);
+	delete[] mensaje;
+	delete[] arreglo;
 }
